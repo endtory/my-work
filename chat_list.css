@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+h2{
+	text-align: center;
+}
+
+.button {
+    display: flex;
+    justify-content: flex-end;  /* 오른쪽 정렬 */
+}
+
+.junggo-form, .write-form {
+    justify-content: flex-end;
+    padding: 20px;
+}
+
+.junggo-form input[type="submit"] {
+    background-color: #FF77AA;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.junggo-form input[type="submit"]:hover {
+    background-color: #ff66a1;
+}
+
+.write-form input[type="submit"] {
+    background-color: #FF77AA;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.write-form input[type="submit"]:hover {
+    background-color: #ff66a1;
+}
+
+.container {
+    display: flex;         /* 가로 정렬 */
+    align-items: flex-start;  /* 위쪽 정렬 */
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fafafa;
+}
+
+.container:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.bookimage {
+    width: 120px;
+    height: 160px;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.bookimage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.title a {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+}
+
+.price {
+    color: #e91e63;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.status-date {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.writer {
+    color: #777;
+    margin-top: 5px;
+}
+
+.pagination{
+	text-align: center;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-box label {
+    margin-right: 5px;
+}
+
+.search-box select,
+
+.search-box input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.search-box input[type="submit"] {
+    background-color: #FF77AA;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-box input[type="submit"]:hover {
+    background-color: #ff66a1;
+}
