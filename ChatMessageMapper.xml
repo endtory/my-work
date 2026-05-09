@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booksajo.dasibom.service.dao.ChatMessageDAO">
+
+    <insert id="insertMessage" parameterType="com.booksajo.dasibom.vo.ChatMessageVO">
+    	INSERT INTO chat_message (chat_room_id, sender_id, receiver_id, message)
+    	VALUES (
+        	#{chat_room_id, jdbcType=VARCHAR},
+        	#{sender_id, jdbcType=VARCHAR},
+        	#{receiver_id, jdbcType=VARCHAR},
+        	#{message, jdbcType=VARCHAR}
+    	)
+	</insert>
+
+
+    <select id="getMessageBetween" parameterType="map" resultType="com.booksajo.dasibom.vo.ChatMessageVO">
+    	SELECT * FROM chat_message
+    	WHERE (sender_id = #{user1} AND receiver_id = #{user2})
+       	OR (sender_id = #{user2} AND receiver_id = #{user1})
+    	ORDER BY timestamp ASC
+	</select>
+</mapper>

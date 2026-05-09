@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.booksajo.dasibom.service.dao.ChatRoomDAO">
+	
+	<!-- 채팅방 찾기 -->
+	<select id="findChatRoom" parameterType="map" resultType="map">
+	  SELECT * FROM chat_room
+	  WHERE (user1_id = #{userId1} AND user2_id = #{userId2})
+	     OR (user1_id = #{userId2} AND user2_id = #{userId1})
+	</select>
+	
+	<!-- 메시지가 없어도 채팅방 리스트 나오도록 수정 -->
+	<select id="selectChatListByUserId" parameterType="String" resultType="map">
+	  SELECT
+	    cr.id AS chatRoomId,
+	    CASE 
+	      WHEN cr.user1_id = #{userId} THEN cr.user2_id
+	      ELSE cr.user1_id
+	    END AS otherUserId,
+	    DBMS_LOB.SUBSTR(cm.message, 1000, 1) AS lastMessage,  <!-- 여기를 수정 -->
+	    cm.timestamp AS lastMessageTime
+	  FROM chat_room cr
+	  LEFT JOIN (
+	    SELECT chat_room_id, message, timestamp
+	    FROM chat_message
+	    WHERE (chat_room_id, timestamp) IN (
+	        SELECT chat_room_id, MAX(timestamp)
+	        FROM chat_message
+	        GROUP BY chat_room_id
+	    )
+	  ) cm ON cr.id = cm.chat_room_id
+	  WHERE cr.user1_id = #{userId} OR cr.user2_id = #{userId}
+	  ORDER BY cm.timestamp DESC NULLS LAST
+	</select>
+	
+	<!-- 채팅 내역 -->
+	<select id="selectChatHistory" parameterType="map" resultType="com.booksajo.dasibom.vo.ChatMessageVO">
+	  SELECT * FROM chat_message
+	  WHERE chat_room_id = (
+	    SELECT id FROM chat_room
+	    WHERE (user1_id = #{userId} AND user2_id = #{otherUserId})
+	       OR (user1_id = #{otherUserId} AND user2_id = #{userId})
+	    FETCH FIRST 1 ROWS ONLY
+	  )
+	  ORDER BY timestamp ASC
+	</select>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.booksajo.dasibom.service.dao.ChatRoomDAO">
+	
+	<insert id="insertChatRoom" parameterType="com.booksajo.dasibom.vo.ChatRoomVO" keyProperty="id">
+    	
+    	INSERT INTO chat_room (id, user1_id, user2_id, created_at)
+    	VALUES (chat_room_seq.NEXTVAL, #{user1_id}, #{user2_id}, sysdate)
+	</insert>
+
+    <select id="selectChatRoomsByUserId" resultType="com.booksajo.dasibom.vo.ChatRoomVO">
+        SELECT id, user1_id, user2_id, created_at
+        FROM chat_room
+        WHERE user1_id = #{user1_id} OR user2_id = #{user2_id}
+        ORDER BY created_at DESC
+    </select>
+
+    <select id="selectChatRoomById" resultType="com.booksajo.dasibom.vo.ChatRoomVO">
+        SELECT id, user1_id, user2_id, created_at
+        FROM chat_room
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectChatRoomByUsers" resultType="com.booksajo.dasibom.vo.ChatRoomVO">
+        SELECT id, user1_id, user2_id, created_at
+        FROM chat_room
+        WHERE (user1_id = #{user1_id} AND user2_id = #{user2_id})
+           OR (user1_id = #{user2_id} AND user2_id = #{user1_id})
+    </select>
+
+</mapper>
